@@ -1,18 +1,20 @@
 # REEM
 
-Author: Trishul Nagenalli, updates and current maintenance by Kris Hauser
+Author: Trishul Nagenalli and Kris Hauser
 
 ## About
 
-REEM (Redis Extendable Efficient Middleware) is a centralized middleware package for communication across distributed systems (e.g., robots). It is designed to be a single-package solution for passing information anywhere in the system while emphasizing ease of use and efficiency.
+REEM (Redis Extendable Efficient Middleware) is a middleware package for communication across distributed systems (e.g., robots) using a centralized Redis database. It is designed to be a single-package solution for passing information anywhere in a system while emphasizing ease of use and efficiency.
 
-To make it easy, we chose to model information as a nested data structure that closely resembles python dictionaries. To the user, working with a database feels like working with a python dictionary. Out of the box, REEM supports communicating all native python types and numpy arrays.
-
-To make it fast, we used [Redis](https://redis.io/) (an in-memory key-value database) running [ReJSON](https://oss.redislabs.com/redisjson/) (enabling Redis to store JSON data) as a central information store. To get maximum performance, we give users the power to control exactly how information is passed between the local program and Redis by defining their own marshallers.  REEM comes with builtin marshallers for Numpy arrays.
+- REEM is easy to use.  You can read or write data from the database using a nested data structure that feels almost like working with native Python dictionaries, lists, strings, numbers, and Numpy arrays.  If you feel ReJSON is a little clumsy, REEM may be just the tool for you.
+- REEM is fast. We use [Redis](https://redis.io/) (an in-memory key-value database) running [ReJSON](https://oss.redislabs.com/redisjson/) (enabling Redis to store JSON data) as a central information store.  This can support hundreds of thousands of queries per second.  We also support Pythonic access to array extension, length queries, 
+- REEM is extendable.  If you want to store some complex Python object, we give users the power to control exactly how information is passed between the local program and Redis by defining custom marshallers.  REEM comes with builtin marshallers for Numpy arrays.
 
 REEM currently offers two communication paradigms:
-- get/set database
+- get/set key-value store
 - publish-subscribe
+
+In other projects, we have used these primitives implement other paradigms, such as streams, event queues, and RPC.
 
 
 ## Installation

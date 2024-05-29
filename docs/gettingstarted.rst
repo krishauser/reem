@@ -16,15 +16,25 @@ Requirements:
 Installing Redis and ReJSON (Linux or MacOS)
 ############################################
 
-This section goes through how to set up a server. REEM runs on Redis and requires the ReJSON module. We will install both and check that they are working.
+This section goes through how to set up a server. REEM requires both Redis and the ReJSON module. 
+You will need to install both and check that they are working.  The below instructions will work on versions
+Redis 5.0.4 and ReJSON version 2.0, but we have noticed that different versions of Redis and ReJSON may
+be incompatible. 
 
 
 Redis install
 **************
 
-In Ubuntu 18.04+, simply install Redis via  ``sudo apt-get install redis-server``.
+Newer systems (Ubuntu 18.04+)
+-----------------------------
 
-If you are running Ubuntu 16.04, DO NOT install Redis through ``apt-get install redis-server``
+You may simply install Redis via  ``sudo apt-get install redis-server``.  This will install
+the Redis server as a system daemon, which means you will not need to run the server explicitly.
+
+
+Older systems (Ubuntu 16.04 and earlier)
+-----------------------------------------
+DO NOT install Redis through ``apt-get install redis-server``!
 This will install Redis 3 which does not support modules, and you will not be able to run REEM.
 Instead, follow the instructions below to install Redis from source.
 
@@ -76,14 +86,14 @@ Execute a basic set and get with Redis, ensuring the output looks similar to the
 Congratulations! You have successfully installed and ran Redis. Shutdown the Redis server (issue the ``shutdown`` command
 in the cli) and exit the cli.
 
+
 Installing ReJSON
 *****************
-`ReJSON <https://oss.redislabs.com/redisjson/>`_ is a third party module that introduces a JSON datatype to Redis. REEM relies on it extensively
+`ReJSON <https://oss.redislabs.com/redisjson/>`_ is a third party module that introduces a JSON datatype to Redis. REEM relies on it extensively.
+Its build instructions have been changing recently, so please read the official documentation for the most up-to-date instructions. 
 
-Starting from inside the ``rejson-server`` folder, continuing from the Redis installation script
-
-The following will
-build ReJSON from source.
+Starting from inside the ``rejson-server`` folder, continuing from
+the Redis installation script, the following will build ReJSON from source.
 
 .. code-block:: bash
 
@@ -93,7 +103,7 @@ build ReJSON from source.
     cd ..
     wget https://raw.githubusercontent.com/tn74/reem/master/examples/redis.conf
 
-The above script produces an compiled library file at ``redisjson/src/rejson.so``. Redis needs to be
+The above script produces a compiled library file at ``redisjson/src/rejson.so``. Redis needs to be
 told to use that library file, and so the last line downloads a configuration file that enables ReJSON when Redis uses it.  
 
 Specifically, line 46 (in the modules section) says ``loadmodule redisjson/src/rejson.so`` to specify
@@ -113,7 +123,7 @@ Then, you will want to change the value of the ``supervised`` directive to ``sys
 
     sudo systemctl restart redis.service
 
-If you installed via another method, e.g. source you will need to manually open up a terminal and run
+If you installed via another method, e.g. source, you will need to manually open up a terminal and run
 ``redis-server redis.conf``. This will start the Redis server with ReJSON.
 
 Let's test the ReJSON installation.  Open another terminal and run ``redis-cli``. Be sure you can execute the following in that redis-cli prompt
